@@ -41,3 +41,7 @@ def rotateRight(tree:AVLTree,avlnode:AVLNode):
         else:
             padre.leftnode=hijoIzq
     return tree.root
+
+def calculateBalance(tree:AVLTree):
+    
+    return
