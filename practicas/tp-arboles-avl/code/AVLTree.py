@@ -26,6 +26,7 @@ def rotateLeft(tree:AVLTree,avlnode:AVLNode):
 	elif tree.root==avlnode:
 		tree.root=hijoDer
 	hijoDer.parent=nodoActual.parent
+	nodoActual.parent=hijoDer
 	return tree.root
 
 
@@ -44,6 +45,8 @@ def rotateRight(tree:AVLTree,avlnode:AVLNode):
 			padre.leftnode=hijoIzq
 	elif tree.root==avlnode:
 		tree.root=hijoIzq
+	hijoIzq.parent=nodoActual.parent
+	nodoActual.parent=hijoIzq
 	return tree.root
 
 def calculateBalance(tree:AVLTree):
@@ -82,7 +85,7 @@ def reBalance(tree:AVLTree):
 			if nodo.leftnode.bf<0:
 				rotateLeft(tree,nodo.leftnode)
 			rotateRight(tree,nodo)
-	
+	calculateBalance(tree)
 	return tree
 
 def __recorreInOrder(avlnode:AVLNode,l:list):
