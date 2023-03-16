@@ -91,7 +91,7 @@ La función de reBalance primero manda a actualizar/calcular los bf's del árbol
 y mediante la función __recorreInOrder se obtiene una lista con los nodos del árbol
 Para cada nodo se comprueba si el bf esta fuera de los limites para que sea un árbol balanceado
 Y de ser asi, comprueba que no se tenga un caso especial, de ser asi primero se hace el giro
-contrario al que se deberia hacer, y luego el que corresponde
+contrario al que se debería hacer, y luego el que corresponde
 """
 def reBalance(tree:AVLTree):
 	nodosArbol=[]
@@ -279,7 +279,7 @@ def delete(tree:AVLTree,elem):
 	else:
 		return None
 
-def recorreDelKey(avlnode:AVLNode,key):
+def __recorreDelKey(avlnode:AVLNode,key):
 	if avlnode.key==key:											#Una vez que encuentro el nodo que tiene la key que busco eliminar
 		if avlnode.leftnode==None and avlnode.rightnode==None:		#debo verificar 4 posibles casos, que el nodo no tenga nodos hijos, tenga
 			if avlnode.parent.key>key:								#un solo hijo a la izq, que tenga un solo hijo a la der, o que tenga 
@@ -329,59 +329,62 @@ def recorreDelKey(avlnode:AVLNode,key):
 		resp=None
 		if avlnode.key>key:
 			if avlnode.leftnode!=None:
-				resp=recorreDelKey(avlnode.leftnode,key)
+				resp=__recorreDelKey(avlnode.leftnode,key)
 			else:
 				resp=None
 		elif avlnode.key<key:
 			if avlnode.rightnode!=None:
-				resp=recorreDelKey(avlnode.rightnode,key)    
+				resp=__recorreDelKey(avlnode.rightnode,key)    
 			else:
 				resp=None  
 		return resp
 
 def deleteKey(tree:AVLTree,key):
 	if tree.root!=None:											#Si el árbol no esta vacío, se llama a la función recursiva
-		return recorreDelKey(tree.root,key)						#con el nodo raíz como primer nodo
+		resp= __recorreDelKey(tree.root,key)					#con el nodo raíz como primer nodo
+		if resp!=None:
+			reBalance(tree)
+		return resp
 	else:
 		return None
 
-def recorreAccess(avlnode:AVLNode,key):
+def __recorreAccess(avlnode:AVLNode,key):
 	if avlnode.key==key:										#el caso base es cuando la key del nodo coincide con la key buscada
 		return avlnode.value									#y se regresa lo que se encuentre en su campo value
 	elif avlnode.key>key:										#si la key a buscar es menor a la key del nodo, paso el hijo de la 
 		if avlnode.leftnode!=None:								#izquierda para continuar la búsqueda, si no tiene hijo a la izquierda
-			return recorreAccess(avlnode.leftnode,key)			#se regresa none, ya que no hay nodo mas chico
+			return __recorreAccess(avlnode.leftnode,key)			#se regresa none, ya que no hay nodo mas chico
 		else:
 			return None
 	else:														#si la key no es ni igual ni menor, significa que es mayor
 		if avlnode.rightnode!=None:								#por lo tanto si existe hijo a la derecha se pasa este a la función recursiva
-			return recorreAccess(avlnode.rightnode,key)			#si no hay mas hijos a la derecha, significa que no hay otro mas grande y se 
+			return __recorreAccess(avlnode.rightnode,key)			#si no hay mas hijos a la derecha, significa que no hay otro mas grande y se 
 		else:													#regresa none
 			return None
 
 def access(tree:AVLTree,key):
 	if tree.root!=None:											#Si el árbol no esta vacío, se llama a la función recursiva
-		return recorreAccess(tree.root,key)						#con el nodo raíz como primer nodo
+		return __recorreAccess(tree.root,key)						#con el nodo raíz como primer nodo
 	else:
 		return None
 
-def recorreUpdate(avlnode:AVLNode,elem,key):
+def __recorreUpdate(avlnode:AVLNode,elem,key):
 	if avlnode.key==key:										#como caso base se tiene que la key buscada coincida con la key del nodo
 		avlnode.value=elem										#de encontrarse se actualiza su campo value y regresa la key
 		return avlnode.key
 	elif avlnode.key>key:										#si la key a buscar es menor a la key del nodo, paso el hijo de la
 		if avlnode.leftnode!=None:								#izquierda para continuar la búsqueda, si no tiene hijo a la izquierda
-			return recorreUpdate(avlnode.leftnode,elem,key)		#se regresa none, ya que no hay nodo mas chico
+			return __recorreUpdate(avlnode.leftnode,elem,key)		#se regresa none, ya que no hay nodo mas chico
 		else:
 			return None
 	else:
 		if avlnode.rightnode!=None:								#si la key no es ni igual ni menor, significa que es mayor
-			return recorreUpdate(avlnode.rightnode,elem,key)	#por lo tanto si existe hijo a la derecha se pasa este a la función recursiva
+			return __recorreUpdate(avlnode.rightnode,elem,key)	#por lo tanto si existe hijo a la derecha se pasa este a la función recursiva
 		else:													#si no hay mas hijos a la derecha, significa que no hay otro mas grande y se
 			return None											#regresa none
 
 def update(tree:AVLTree,elem,key):
 	if tree.root!=None:
-		return recorreUpdate(tree.root,elem,key)
+		return __recorreUpdate(tree.root,elem,key)
 	else:
 		return None
