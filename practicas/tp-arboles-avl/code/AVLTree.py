@@ -208,7 +208,7 @@ def insert(tree:AVLTree,elem, key):
 		tree.root=nodo										#sino, se llama a la función recursiva.
 		return nodo.key
 	else:
-		res=__recorreInsert(tree.root,nodo)
+		res=__recorreInsert(tree.root,nodo)					#Si se inserto exitosamente, se llama a un rebalanceo del árbol
 		if res!=None:
 			reBalance(tree)
 		return res
@@ -274,7 +274,7 @@ def delete(tree:AVLTree,elem):
 	if tree.root!=None:												#Si el árbol no esta vacío, se llama a la función recursiva con el nodo raíz
 		resp= __recorreDelete(tree.root,elem)						#como primer nodo
 		if resp!=None:
-			reBalance(tree)
+			reBalance(tree)											#Si se elimino con éxito el nodo, se llama a un rebalanceo del árbol
 		return resp
 	else:
 		return None
