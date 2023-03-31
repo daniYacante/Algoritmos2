@@ -55,8 +55,27 @@ def insert(T:Trie,element:str):
 	__insert(T.root,element)
 	return
 
+def __searchMatch(nl:List[TrieNode],element:str):
+	nodo=__searchInList(nl,element)
+	if nodo!=None:
+		if len(element)>1:
+			if nodo.children!=None:
+				return __searchMatch(nodo.children,element[1:])
+			else:
+				return False
+		elif nodo.isEndOfWord:
+			return True
+		else:
+			return False
+	else:
+		return False
+
 def search(T:Trie,element:str):
-	return
+	if T.root!=None:
+		resp= __searchMatch(T.root,element)
+		return resp
+	else:
+		return False
 
 def delete(T:Trie,element:str):
 	return
@@ -68,3 +87,7 @@ insert(A,"holanda")
 insert(A,"hipopotamo")
 insert(A,"pez")
 print(showTrieContent(A))
+print(search(A,"pe"))
+print(search(A,"hola"))
+print(search(A,"holanda"))
+print(search(A,"holonda"))
