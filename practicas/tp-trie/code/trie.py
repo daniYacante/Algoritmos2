@@ -77,8 +77,44 @@ def search(T:Trie,element:str):
 	else:
 		return False
 
+def __del(nl:List[TrieNode],element:str):
+	nodo=__searchInList(nl,element)
+	if nodo!=None:
+		if len(element)>1:
+			if nodo.children!=None:
+				resp=__del(nodo.children,element[1:])
+				if resp=="del":
+					if nodo.isEndOfWord:
+						return True
+					else:
+						nl.remove(nodo)
+						return "del"
+				else:
+					return resp
+			else:
+				return False
+		elif nodo.isEndOfWord:
+			if nodo.children!=None:
+				nodo.isEndOfWord=False
+				return True
+			else:
+				nl.remove(nodo)
+				return "del"
+		else:
+			return False
+	else:
+		return False
+
+
 def delete(T:Trie,element:str):
-	return
+	if T.root!=None:
+		resp=__del(T.root,element)
+		if resp=="del":
+			return True
+		else:
+			return resp
+	else:
+		return False
 
 A=Trie()
 insert(A,"holo")
@@ -91,3 +127,5 @@ print(search(A,"pe"))
 print(search(A,"hola"))
 print(search(A,"holanda"))
 print(search(A,"holonda"))
+print("delete: ",delete(A,"holanda"))
+print(showTrieContent(A))
