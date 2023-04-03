@@ -115,17 +115,3 @@ def delete(T:Trie,element:str):
 			return resp
 	else:
 		return False
-
-A=Trie()
-insert(A,"holo")
-insert(A,"hola")
-insert(A,"holanda")
-insert(A,"hipopotamo")
-insert(A,"pez")
-print(showTrieContent(A))
-print(search(A,"pe"))
-print(search(A,"hola"))
-print(search(A,"holanda"))
-print(search(A,"holonda"))
-print("delete: ",delete(A,"holanda"))
-print(showTrieContent(A))

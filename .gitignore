@@ -1,4 +1,4 @@
 Cursado/
-practicas/tp-arboles-avl/code/__pycache__/
+*__pycache__
 test*.py
 *.docx
