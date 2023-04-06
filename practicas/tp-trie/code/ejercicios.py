@@ -96,7 +96,7 @@ insert(C,"manzana")
 insert(C,"caserio")
 insert(C,"casamiento")
 """
-C es igual a B
+C es igual a B por mas que este desordenado
 """
 
 print(sameDoc(B,C))
@@ -107,7 +107,27 @@ insert(D,"casa")
 insert(D,"casamiento")
 insert(D,"casorio")
 insert(D,"manzana")
+insert(D,"oirosac")
 """
 D no es igual a B
 """
 print(sameDoc(B,D))
+
+
+"""
+Ejercicio 6
+Primero obtengo todas las palabras del Trie, y luego para cada una obtengo la cadena inversa y la comparo con las demás palabras del Trie
+La complejidad temporal sera la de encontrar todas las palabras y luego si n es la cantidad de palabras, O(n^2) en comparar una
+cadena con las demas
+"""
+
+def checkPalindrome(T:Trie):
+	words=showTrieContent(T)
+	HP=False
+	for i in range(len(words)):
+		for j in range(len(words)):
+			if i!=j and words[i][::-1]==words[j]:
+				HP=True
+	return HP
+
+print(checkPalindrome(D))
