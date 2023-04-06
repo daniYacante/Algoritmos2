@@ -131,3 +131,14 @@ def checkPalindrome(T:Trie):
 	return HP
 
 print(checkPalindrome(D))
+
+"""
+Ejercicio 7
+"""
+insert(D,"groenlandia")
+insert(D,"groenlandes")
+insert(D,"madera")
+insert(D,"mama")
+
+print(autoCompletar(D,"groen"))
+print(autoCompletar(D,"ma"))

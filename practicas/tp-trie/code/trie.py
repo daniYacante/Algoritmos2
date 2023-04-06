@@ -115,3 +115,40 @@ def delete(T:Trie,element:str):
 			return resp
 	else:
 		return False
+
+def __findCommon(nl:List[TrieNode]):
+	if len(nl)>1:
+		return ""
+	elif nl[0].children==None:
+		return None
+	else:
+		resp=__findCommon(nl[0].children)
+		if resp!=None:
+			resp=nl[0].key+resp
+		return resp
+
+def __findPrefix(nl:List[Trie],prefix):
+	nodo=__searchInList(nl,prefix)
+	if nodo!=None:
+		if len(prefix)>1:
+			if nodo.children!=None:
+				return __findPrefix(nodo.children,prefix[1:])
+			else:
+				return None
+		elif nodo.children!=None:
+			return __findCommon(nodo.children)
+		else:
+			return None
+	else:
+		return None
+
+
+def autoCompletar(T:Trie,cadena:str):
+	if T.root!=None:
+		resp=__findPrefix(T.root,cadena)
+		if resp==None:
+			return ""
+		else:
+			return resp
+	else:
+		return False
