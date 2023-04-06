@@ -68,8 +68,8 @@ print(searchP(B,"cas",7))
 
 """
 Ejercicio 5
-Mi enfoque fue el de llamar a la funcion que regresa todas las palabras en el Trie, hecho esto con ambos Trie, ordeno las listas en orden
-alfabetico y comparo las mismas posiciones de las listas, si para la misma posicion tengo palabras distintas, los Trie no son iguales.
+Mi enfoque fue el de llamar a la función que regresa todas las palabras en el Trie, hecho esto con ambos Trie, ordeno las listas en orden
+alfabético y comparo las mismas posiciones de las listas, si para la misma posición tengo palabras distintas, los Trie no son iguales.
 El costo seria el O de buscar todas las palabras en ambos Trie, mas el O de ordenarlas mas el O de comparar.
 Buscar todas las palabras: O(m|E|)
 Ordenar las listas: O(nlogn)
@@ -88,8 +88,6 @@ def sameDoc(T1:Trie,T2:Trie):
 	else:
 		return False
 	
-	return
-
 C=Trie()
 insert(C,"casorio")
 insert(C,"casa")
@@ -119,10 +117,10 @@ print(sameDoc(B,D))
 Ejercicio 6
 Primero obtengo todas las palabras del Trie, y luego para cada una obtengo la cadena inversa y la comparo con las demás palabras del Trie
 La complejidad temporal sera la de encontrar todas las palabras y luego si n es la cantidad de palabras, O(n^2) en comparar una
-cadena con las demas
+cadena con las demás.
 """
 
-def checkPalindrome(T:Trie):
+def checkInvertidos(T:Trie):
 	words=showTrieContent(T)
 	HP=False
 	for i in range(len(words)):
@@ -131,7 +129,7 @@ def checkPalindrome(T:Trie):
 				HP=True
 	return HP
 
-print(checkPalindrome(D))
+print(checkInvertidos(D))
 
 """
 Ejercicio 7
