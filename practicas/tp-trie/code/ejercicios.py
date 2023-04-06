@@ -64,3 +64,50 @@ insert(B,"manzana")
 
 print(showTrieContent(B))
 print(searchP(B,"cas",7))
+
+"""
+Ejercicio 5
+Mi enfoque fue el de llamar a la funcion que regresa todas las palabras en el Trie, hecho esto con ambos Trie, ordeno las listas en orden
+alfabetico y comparo las mismas posiciones de las listas, si para la misma posicion tengo palabras distintas, los Trie no son iguales.
+El costo seria el O de buscar todas las palabras en ambos Trie, mas el O de ordenarlas mas el O de comparar.
+Buscar todas las palabras: O(m|E|)
+Ordenar las listas: O(nlogn)
+Comparar las listas: O(n)
+"""
+def sameDoc(T1:Trie,T2:Trie):
+	palT1=showTrieContent(T1)
+	palT2=showTrieContent(T2)
+	palT1.sort()
+	palT2.sort()
+	if len(palT1)==len(palT2):
+		for i in range(len(palT1)):
+			if palT1[i]!=palT2[i]:
+				return False
+		return True
+	else:
+		return False
+	
+	return
+
+C=Trie()
+insert(C,"casorio")
+insert(C,"casa")
+insert(C,"manzana")
+insert(C,"caserio")
+insert(C,"casamiento")
+"""
+C es igual a B
+"""
+
+print(sameDoc(B,C))
+
+D=Trie()
+insert(D,"casa")
+# insert(D,"caserio")
+insert(D,"casamiento")
+insert(D,"casorio")
+insert(D,"manzana")
+"""
+D no es igual a B
+"""
+print(sameDoc(B,D))
