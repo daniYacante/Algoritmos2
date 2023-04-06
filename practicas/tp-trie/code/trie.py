@@ -7,7 +7,9 @@ class TrieNode:
 	children=None
 	key=None
 	isEndOfWord=False
-
+"""
+Función que regresa todas las palabras en el Trie, hace una búsqueda en profundidad por los nodos buscando la marca de fin de palabra
+"""
 def __showTrie(nl:List[TrieNode],cadenas:list,palabra:str):
 	for node in nl:
 		if node.isEndOfWord:
@@ -22,7 +24,12 @@ def showTrieContent(T:Trie):
 		return content
 	else:
 		return None
-
+"""
+La función Insert() busca si el primer elemento de la cadena se encuentra en el nivel correspondiente, si lo esta, de forma recursiva
+pasa los elementos restantes de la cadena, quitando el primero.
+Si no se encuentra, en el nodo correspondiente se crea un hijo con el valor de key correspondiente y si quedan mas valores de la cadena se
+los pasa de forma recursiva.
+"""
 def __insert(lista:list,element:str):
 	nodo=__searchInList(lista,element)
 	if nodo!=None:
@@ -54,6 +61,10 @@ def insert(T:Trie,element:str):
 		T.root=[]
 	__insert(T.root,element)
 	return
+"""
+La función search() realiza una búsqueda en anchura del primer carácter de la cadena en el nivel correspondiente, si el nodo final esta
+marcado como fin de palabra regresa True para indicar que se encuentra la palabra en el Trie, cualquier otro caso regresa False.
+"""
 
 def __searchMatch(nl:List[TrieNode],element:str):
 	nodo=__searchInList(nl,element)
@@ -76,7 +87,18 @@ def search(T:Trie,element:str):
 		return resp
 	else:
 		return False
+"""
+La función delete() tiene 3 posibles caminos...
+	* La palabra no se encuentra: no hay nada para borrar
+	* La palabra se encuentra:
+		- Como parte de otra palabra: Se quita la marca de fin de palabra
+		- Como palabra que no es parte de otra: Se borran nodos hasta llegar a la raíz o al proximo nodo marcado como fin de palabra
 
+De forma recursiva busco la palabra, como si fuera la función search(), cuando se encuentra se ve si tiene la marca de fin de palabra,
+si tiene hijos, simplemente se le quita la marca y se retorna. Si no tiene hijos, de la lista en la que se encuentra el nodo, se elimina
+al nodo correspondiente y se regresa la "bandera" 'del' para indicar que hay que borrar nodos hasta encontrar la proxima marca de fin de palabra
+Si se llega a la raíz, se borra de la raíz el nodo y se retorno True habiendo borrado la palabra por completo.
+"""
 def __del(nl:List[TrieNode],element:str):
 	nodo=__searchInList(nl,element)
 	if nodo!=None:
@@ -115,7 +137,14 @@ def delete(T:Trie,element:str):
 			return resp
 	else:
 		return False
-
+"""
+La función autoCompletar() esta basada en la función search, primero busco si se encuentra el prefijo pasado, si no se encuentra regresa None,
+que luego se cambia por la cadena vacía.
+Si se encuentra el prefijo, paso a la función __findCommon() que va a iterar recursivamente hasta llegar a que un nodo tiene mas de 1 hijo,
+indicando una derivación de las palabras, o hasta que no haya mas hijos. Si se llega a que hay mas de un hijo regresa la cadena vacía
+y se va a ir añadiendo las key de los nodos superiores hasta llegar a donde se encontró el prefijo.
+Si se llega a que no hay mas hijos, regresa None, que luego se cambia por la cadena vacía, en señal de que no hay palabras en común con ese prefijo
+"""
 def __findCommon(nl:List[TrieNode]):
 	if len(nl)>1:
 		return ""

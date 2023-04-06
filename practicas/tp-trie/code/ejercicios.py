@@ -63,6 +63,7 @@ insert(B,"casorio")
 insert(B,"manzana")
 
 print(showTrieContent(B))
+print("palabras que empiezan con \"cas\" y tienen long 7 ")
 print(searchP(B,"cas",7))
 
 """
@@ -141,4 +142,4 @@ insert(D,"madera")
 insert(D,"mama")
 
 print(autoCompletar(D,"groen"))
-print(autoCompletar(D,"ma"))
+print(autoCompletar(D,"bana"))
