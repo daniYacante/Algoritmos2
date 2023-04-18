@@ -85,11 +85,12 @@ Ejercicio 8
 """
 print("Ejercicio 8")
 def findString(pattern:str, string:str):
-    keyPattern=strToKey([c for c in pattern])
+    funcHash=lambda key: key%1013 #m=1013, numero primo elegido
+    keyPattern=funcHash(strToKey([c for c in pattern]))
     n=len(pattern)
     m=len(string)
     for i in range(m-n+1):
-        keyStringCut=strToKey(string[i:i+n])
+        keyStringCut=funcHash(strToKey(string[i:i+n]))
         if keyPattern==keyStringCut:
             if pattern==string[i:i+n]:
                 return i
