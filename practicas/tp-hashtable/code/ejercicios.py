@@ -83,7 +83,7 @@ Ejercicio 7
 """
 Ejercicio 8
 """
-
+print("Ejercicio 8")
 def findString(pattern:str, string:str):
     keyPattern=strToKey([c for c in pattern])
     n=len(pattern)
@@ -95,9 +95,7 @@ def findString(pattern:str, string:str):
                 return i
     return None 
 
-
-
-findString("cada","abradacadabra")
+print(findString("cada","abradacadabra"))
 
 """
 Ejercicio 9
