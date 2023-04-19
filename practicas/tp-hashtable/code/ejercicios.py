@@ -79,6 +79,27 @@ zipHash("A9514BFJ")
 """
 Ejercicio 7
 """
+print("Ejercicio 7")
+def acortarString(S:str):
+    charAct=S[0]
+    cont=1
+    cadAcort=""
+    for char in S[1:]:
+        if char!=charAct:
+            cadAcort+=f"{charAct}{cont}"
+            cont=1
+            charAct=char
+        else:
+            cont+=1
+    cadAcort+=f"{charAct}{cont}"
+    if len(cadAcort)<len(S):
+        return cadAcort
+    else:
+        return S
+print("Acortado de 'aabcccccaaa'")
+print(acortarString("aabcccccaaa"))
+print("Acortado de 'ab'")
+print(acortarString("ab"))
 
 """
 Ejercicio 8
