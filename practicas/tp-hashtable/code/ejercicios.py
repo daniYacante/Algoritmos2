@@ -125,7 +125,6 @@ Complejidad:
     Insertar elementos de T en la tabla: O(n), insertar es O(1)
     Buscar los elementos de S en la tabla: O(m), calculo de key O(1), búsqueda en la posición indicada O(n/m)
     Total: O(n+m)
-
 """
 
 def checkSubSet(setS:list,setT:list):
