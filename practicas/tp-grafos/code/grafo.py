@@ -8,6 +8,7 @@ class grafo():
 	def __init__(self,nVertices:list) -> None:
 		self.nodos=[None for n in nVertices]
 		self.m=len(nVertices)
+		self.vistos=[]
 		for v in nVertices:
 			IN=False
 			for i in range(self.m):
@@ -70,12 +71,13 @@ def createGraph(vertices, aristas):
 
 def existPath(grafo:grafo,v1, v2):
 	posV1=grafo._getPos(v1)
-	if posV1!=None and not grafo.nodos[posV1].visto:
+	if posV1!=None and not (grafo.nodos[posV1].value in grafo.vistos):
 		vec=grafo.nodos[posV1].vecinos
-		grafo.nodos[posV1].visto=True
+		grafo.vistos.append(grafo.nodos[posV1].value)
 		if vec!=None:
 			for v in vec:
 				if v==v2:
+					grafo.vistos.clear()
 					return True
 			for v in vec:
 				
@@ -83,7 +85,17 @@ def existPath(grafo:grafo,v1, v2):
 				if resp:
 					return resp
 		return False
+def isConnected(grafo:grafo):
+	nodos=grafo.nodos
+	for i in range(len(nodos)):
+		for j in range(len(nodos)):
+			if i!=j:
+				if not existPath(grafo,grafo.nodos[i].value,grafo.nodos[j].value):
+					return False
+	return True
 
 grafo=createGraph([1,2,3,4,5,6,7],[(1,2),(1,3),(2,3),(2,4),(5,4),(6,4)])
 print(existPath(grafo,5,7))
 print(grafo)
+
+print("Esta conectado?: ",isConnected(grafo))
