@@ -115,6 +115,17 @@ def detectCycles(grafo:grafo,v,va):
 			return True
 def isTree(grafo:grafo):
 	return not detectCycles(grafo,grafo.nodos[randint(1,len(grafo.nodos))].value,None) and isConnected(grafo)
+
+def isComplete(grafo:grafo):
+	nNodes=len(grafo.nodos)
+	complete=False
+	for nodo in grafo.nodos:
+		vecinos=nodo.vecinos
+		if len(vecinos)==(nNodes-1) and not (nodo.value in vecinos):
+			complete= True
+		else:
+			complete=False
+	return complete
 		
 grafo=createGraph([1,2,3,4,5,6,7],[(1,2),(1,3),(2,3),(2,4),(5,4),(6,4),(6,7)])
 print(existPath(grafo,5,7))
@@ -123,3 +134,8 @@ print(grafo)
 print("Esta conectado?: ",isConnected(grafo))
 print("Hay ciclos? : ", detectCycles(grafo,4,None))
 print("Es Arbol? : ",isTree(grafo))
+print("Esta completo? : ",isComplete(grafo))
+
+grafoCompleto=createGraph([1,2,3,4],[(1,2),(1,3),(1,4),(2,3),(2,4),(3,4)])
+print(grafoCompleto)
+print("Esta completo? : ",isComplete(grafoCompleto))
