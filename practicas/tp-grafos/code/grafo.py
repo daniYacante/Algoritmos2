@@ -1,3 +1,4 @@
+from random import randint
 class grafo():
 	def fhash(self,key,i):
 		m=self.m
@@ -80,7 +81,6 @@ def existPath(grafo:grafo,v1, v2):
 					grafo.vistos.clear()
 					return True
 			for v in vec:
-				
 				resp=existPath(grafo,v,v2)
 				if resp:
 					return resp
@@ -91,11 +91,35 @@ def isConnected(grafo:grafo):
 		for j in range(len(nodos)):
 			if i!=j:
 				if not existPath(grafo,grafo.nodos[i].value,grafo.nodos[j].value):
+					grafo.vistos.clear()
 					return False
 	return True
 
-grafo=createGraph([1,2,3,4,5,6,7],[(1,2),(1,3),(2,3),(2,4),(5,4),(6,4)])
+def detectCycles(grafo:grafo,v,va):
+	pos=grafo._getPos(v)
+	if pos!=None:
+		if not (grafo.nodos[pos].value in grafo.vistos):
+			vec=grafo.nodos[pos].vecinos
+			grafo.vistos.append(grafo.nodos[pos].value)
+			if vec!=None:
+				for vn in vec:
+					if vn!=va:
+						resp=detectCycles(grafo,vn,v)
+						if resp!=None:
+							grafo.vistos.clear()
+							return resp
+				return False
+			else:
+				return None
+		else:
+			return True
+def isTree(grafo:grafo):
+	return not detectCycles(grafo,grafo.nodos[randint(1,len(grafo.nodos))].value,None) and isConnected(grafo)
+		
+grafo=createGraph([1,2,3,4,5,6,7],[(1,2),(1,3),(2,3),(2,4),(5,4),(6,4),(6,7)])
 print(existPath(grafo,5,7))
 print(grafo)
 
 print("Esta conectado?: ",isConnected(grafo))
+print("Hay ciclos? : ", detectCycles(grafo,4,None))
+print("Es Arbol? : ",isTree(grafo))
