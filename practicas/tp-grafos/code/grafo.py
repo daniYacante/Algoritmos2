@@ -12,6 +12,7 @@ class grafo():
 		self.vistos=[]
 		self.noVistos=[]
 		self.aristas=0
+		self.componentes=0
 		for v in nVertices:
 			IN=False
 			for i in range(self.m):
@@ -126,9 +127,12 @@ def _cycles(graf:grafo,v,va,ciclos:set):
 def detectCycles(graf:grafo):
 	nodes=graf.noVistos.copy()
 	loop=set()
+	cont=0
 	while graf.getNumNodos()>len(graf.vistos):
-		_cycles(graf,graf.nodos[graf.noVistos[randint(0,len(graf.noVistos)-1)]].value,None,loop)
-
+		posi=graf._getPos(graf.noVistos[randint(0,len(graf.noVistos)-1)])
+		_cycles(graf,graf.nodos[posi].value,None,loop)
+		cont+=1
+	graf.componentes=cont
 	graf.vistos.clear()
 	graf.noVistos=nodes.copy()
 	return loop
@@ -148,12 +152,17 @@ def isComplete(graf:grafo):
 	return complete
 def convertTree(graf:grafo):
 	return detectCycles(graf)
-grafo1=createGraph([1,2,3,4,5,6,7],[(1,2),(1,3),(2,3),(2,4),(5,4),(6,4),(6,7),(7,5)])
+def countConnections(graf:grafo):
+	if graf.componentes==0:
+		detectCycles(graf)	
+	return graf.componentes
+grafo1=createGraph([1,2,3,4,5,6,7],[(1,2),(1,3),(2,3),(5,4),(6,7)])
 print(existPath(grafo1,5,7))
 print(grafo1)
 
 print("Esta conectado?: ",isConnected(grafo1))
 print("Hay ciclos? : ", detectCycles(grafo1))
+print("Hay componentes conexas: ",grafo1.componentes)
 print(grafo1.getNumAristas())
 print("Es Arbol? : ",isTree(grafo1))
 print("Esta completo? : ",isComplete(grafo1))
