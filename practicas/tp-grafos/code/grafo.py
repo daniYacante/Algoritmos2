@@ -156,18 +156,49 @@ def countConnections(graf:grafo):
 	if graf.componentes==0:
 		detectCycles(graf)	
 	return graf.componentes
-grafo1=createGraph([1,2,3,4,5,6,7],[(1,2),(1,3),(2,3),(5,4),(6,7)])
-print(existPath(grafo1,5,7))
+
+def _bfsTree(graf:grafo,tree:grafo):
+	v=graf.vistos.pop(0)
+	graf.noVistos.remove(v)
+	posG=graf._getPos(v)
+	if posG!=None:
+		vec=graf.nodos[posG].vecinos
+		if vec!=None:
+			for vn in vec:
+				if not (vn in graf.vistos) and (vn in graf.noVistos):
+					tree.addArista((vn,v))
+					graf.vistos.append(vn)
+			if len(graf.vistos)!=0:
+				_bfsTree(graf,tree)
+			else:
+				return
+
+def convertToBFSTree(graf:grafo, v):
+	if isConnected(graf):
+		nodes=graf.noVistos.copy()
+		grafTree=grafo(graf.noVistos)
+		graf.vistos.append(v)
+		_bfsTree(graf,grafTree)
+		graf.vistos.clear()
+		graf.noVistos=nodes.copy()
+		return grafTree
+	
+
+
+grafo1=createGraph([1,2,3,4,5,6,7],[(1,2),(1,3),(2,3),(2,4),(5,4),(6,7),(4,6)])
 print(grafo1)
 
+print(convertToBFSTree(grafo1,4))
+"""
+print(existPath(grafo1,5,7))
 print("Esta conectado?: ",isConnected(grafo1))
 print("Hay ciclos? : ", detectCycles(grafo1))
 print("Hay componentes conexas: ",grafo1.componentes)
 print(grafo1.getNumAristas())
 print("Es Arbol? : ",isTree(grafo1))
 print("Esta completo? : ",isComplete(grafo1))
-
 grafoCompleto=createGraph([1,2,3,4],[(1,2),(1,3),(1,4),(2,3),(2,4),(3,4)])
 print(grafoCompleto)
 print(grafoCompleto.getNumAristas())
 print("Esta completo? : ",isComplete(grafoCompleto))
+"""
