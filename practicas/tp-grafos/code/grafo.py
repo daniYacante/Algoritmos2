@@ -182,13 +182,44 @@ def convertToBFSTree(graf:grafo, v):
 		graf.vistos.clear()
 		graf.noVistos=nodes.copy()
 		return grafTree
+	else:
+		return None
 	
+def _dfsTree(graf:grafo,tree:grafo,v):
+	pos=graf._getPos(v)
+	if pos!=None:
+		if not (graf.nodos[pos].value in graf.vistos):
+			vec=graf.nodos[pos].vecinos
+			graf.vistos.append(graf.nodos[pos].value)
+			graf.noVistos.remove(graf.nodos[pos].value)
+			if vec!=None:
+				for vn in vec:
+					if not vn in graf.vistos:
+						resp=_dfsTree(graf,tree,vn)
+						tree.addArista((vn,v))
+				return False
+		else:
+			return True
+	return
 
+def convertToDFSTree(graf:grafo, v):
+	if isConnected(graf):
+		nodes=graf.noVistos.copy()
+		grafTree=grafo(graf.noVistos)
+		_dfsTree(graf,grafTree,v)
+		graf.vistos.clear()
+		graf.noVistos=nodes.copy()
+		return grafTree
+	else:
+		return None
 
-grafo1=createGraph([1,2,3,4,5,6,7],[(1,2),(1,3),(2,3),(2,4),(5,4),(6,7),(4,6)])
+grafo1=createGraph([1,2,3,4,5,6,7],[(1,2),(1,3),(2,3),(2,4),(5,4),(6,7),(4,6),(7,5)])
+print("Grafo")
 print(grafo1)
-
+print("BFSTree")
 print(convertToBFSTree(grafo1,4))
+print("DFSTree")
+print(convertToDFSTree(grafo1,4))
 """
 print(existPath(grafo1,5,7))
 print("Esta conectado?: ",isConnected(grafo1))
