@@ -212,14 +212,45 @@ def convertToDFSTree(graf:grafo, v):
 		return grafTree
 	else:
 		return None
+	
+def _bestRoute(graf:grafo,v2):
+	v=graf.vistos.pop(0)
+	graf.noVistos.remove(v)
+	posG=graf._getPos(v)
+	if posG!=None:
+		vec=graf.nodos[posG].vecinos
+		if vec!=None:
+			for vn in vec:
+				if not (vn in graf.vistos) and (vn in graf.noVistos):
+					if vn==v2:
+						return [vn,v]
+					else:
+						graf.vistos.append(vn)
+			if len(graf.vistos)!=0:
+				resp=_bestRoute(graf,v2)
+				if resp!=None:
+					resp.append(v)
+					return resp
+			else:
+				return	None
+def bestRoute(graf:grafo,v1,v2):
+	nodes=graf.noVistos.copy()
+	graf.vistos.append(v1)
+	path=_bestRoute(graf,v2)
+	graf.vistos.clear()
+	graf.noVistos=nodes.copy()
+	return path
 
-grafo1=createGraph([1,2,3,4,5,6,7],[(1,2),(1,3),(2,3),(2,4),(5,4),(6,7),(4,6),(7,5)])
+# grafo1=createGraph([1,2,3,4,5,6,7],[(1,2),(1,3),(2,3),(2,4),(5,4),(6,7),(4,6),(7,5)])
+grafo1=createGraph([1,2,3,4,5,6,7,8],[(1,2),(2,3),(2,5),(4,5),(5,7),(8,7),(3,8),(3,6),(8,6)])
 print("Grafo")
 print(grafo1)
 print("BFSTree")
 print(convertToBFSTree(grafo1,4))
 print("DFSTree")
 print(convertToDFSTree(grafo1,4))
+print("Camino mas corto entre 1-8")
+print(bestRoute(grafo1,4,3))
 """
 print(existPath(grafo1,5,7))
 print("Esta conectado?: ",isConnected(grafo1))
