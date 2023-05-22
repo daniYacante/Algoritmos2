@@ -21,11 +21,20 @@ def isContained(pattern,cadena):
             else:
                 i+=1
     return False
-
+def isPatternContained(patter:str,cadena:str,comodin:str):
+    partes=patter.split(comodin)
+    indAnt=0
+    for part in partes:
+        ind=cadena[indAnt:].find(part)
+        if ind==-1:
+            return False
+        else:
+            indAnt+=ind+len(part)
+    return True
 if __name__=="__main__":
     print(reduceLen("caaadennaee"))
     print(reduceLen("aaabccddd"))
     print(isContained("amarillo","aaafffmmmarillzzzllhooo"))
     print(isContained("amarillo","aaafffmmmarilzzzhooo"))
     print(isContained("amarillo","aaaaillllfffzzzhrmmmooo"))
-    
+    print(isPatternContained("abtbatc","cabccbacbacab","t"))
